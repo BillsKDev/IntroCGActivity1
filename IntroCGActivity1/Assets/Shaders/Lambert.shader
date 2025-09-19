@@ -2,90 +2,71 @@ Shader "Custom/Lambert"
 {
     Properties
     {
-        _BaseMap   ("Base Map", 2D) = "white" {}
-        _BaseColor ("Base Color", Color) = (1,1,1,1)
-        _EnvCube     ("Reflection Cubemap", Cube) = "" {}
-        _EnvIntensity("Reflection Intensity", Range(0,2)) = 1.0
-        _EnvBlend    ("Reflection Blend (0=Base,1=Env)", Range(0,1)) = 1.0
-        _FresnelPow  ("Fresnel Power", Range(0.1, 8)) = 5.0    // optional rim bias
-        _FresnelBoost("Fresnel Boost", Range(0, 2)) = 1.0
+        _MainTex ("Base Texture", 2D) = "white" {}
+        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
     }
-
+    
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry" "RenderPipeline"="UniversalRenderPipeline" }
-        LOD 200
-
+        Tags { "RenderPipeline" = "UniversalRenderPipeline" "RenderType" = "Opaque" }
+        
         Pass
         {
-            Name "Unlit"
-            Tags { "LightMode"="UniversalForward" }
-
             HLSLPROGRAM
-            #pragma vertex   vert
+            #pragma vertex vert
             #pragma fragment frag
-
+            
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float3 normalOS   : NORMAL;
-                float2 uv0        : TEXCOORD0;
+                float2 uv : TEXCOORD0;    
+                float3 normalOS : NORMAL; 
             };
-
+            
             struct Varyings
             {
-                float4 positionHCS : SV_POSITION;
-                float3 positionWS  : TEXCOORD0;
-                float3 normalWS    : TEXCOORD1;
-                float2 uv          : TEXCOORD2;
+                float4 positionWS : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float3 normalWS : TEXCOORD1;
             };
-
-            TEXTURE2D(_BaseMap);
-            SAMPLER(sampler_BaseMap);
-
-            TEXTURECUBE(_EnvCube);
-            SAMPLER(sampler_EnvCube);
-
+            
+            TEXTURE2D(_MainTex);        
+            SAMPLER(sampler_MainTex);   
+            
             CBUFFER_START(UnityPerMaterial)
-                float4 _BaseColor;
-                float4 _BaseMap_ST;
-                float  _EnvIntensity;
-                float  _EnvBlend;
-                float  _FresnelPow;
-                float  _FresnelBoost;
+                float4 _BaseColor;      
             CBUFFER_END
-
-            Varyings vert (Attributes IN)
+            
+            Varyings vert(Attributes IN)
             {
                 Varyings OUT;
-                float3 posWS = TransformObjectToWorld(IN.positionOS.xyz);
-                float3 nrmWS = TransformObjectToWorldNormal(IN.normalOS);
-
-                OUT.positionWS  = posWS;
-                OUT.normalWS    = nrmWS;
-                OUT.positionHCS = TransformWorldToHClip(posWS);
-                OUT.uv          = TRANSFORM_TEX(IN.uv0, _BaseMap);
+                OUT.positionWS = TransformObjectToHClip(IN.positionOS);        
+                OUT.uv = IN.uv;                                                  
+                OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS)); 
                 return OUT;
             }
-
-            half4 frag (Varyings IN) : SV_Target
+            
+            half4 frag(Varyings IN) : SV_Target
             {
-                half3 baseCol = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv).rgb * _BaseColor.rgb;
-                float3 V = SafeNormalize(GetWorldSpaceViewDir(IN.positionWS));
-                float3 N = SafeNormalize(IN.normalWS);
-                float3 R = reflect(-V, N);
-                half3 envCol = SAMPLE_TEXTURECUBE(_EnvCube, sampler_EnvCube, R).rgb * _EnvIntensity;
-                float  ndotv   = saturate(dot(N, V));
-                float  fresnel = pow(1.0 - ndotv, _FresnelPow) * _FresnelBoost;
-                envCol *= (1.0 + fresnel);
-                half3 finalCol = lerp(baseCol, envCol, _EnvBlend);
-                return half4(finalCol, 1.0);
+                // Sample texture color
+                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
+                
+                // Combine with base color
+                half3 finalColor = texColor.rgb * _BaseColor.rgb;
+                
+                // Apply simple lighting
+                half3 normal = normalize(IN.normalWS);
+                Light mainLight = GetMainLight();                    // Fetch main directional light
+                half3 lightDir = normalize(mainLight.direction);
+                half NdotL = saturate(dot(normal, lightDir));        // Lambertian lighting calculation
+                
+                return half4(finalColor * NdotL, 1.0);               // Final shaded color
             }
+            
             ENDHLSL
         }
     }
-
-    FallBack Off
 }
