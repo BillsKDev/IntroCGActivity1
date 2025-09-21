@@ -12,10 +12,15 @@
 During class, I worked on a variety of shaders and learned about the code/math behind them such as:
 
 MultiUV Shader - This shader allows me to select two different UV coordinates for the texture on the model, and lets me switch between them in the inspector
+
 MultiUV ViewDir Shader - This shader adds to it with lighting properties like rim color/strength/power and depending on the viewing angle, the amount of light reflected changes with the help of fresnel calculations
+
 WorldPosDebug Shader - This shader takes the world scale and an offset, and based on the world position of the object when you move it around it colors the object differently with RGB colors. For example if an object is higher than another object, the object would appear more green (y axis) so this can be used to understand where objects are positioned in the world and the differences in coordinates
+
 WorldReflection Shader - This shader uses a cubemap and reflects the environment on the object and is useful for things like reflections or shiny objects. You can change the intensity of the reflection or how much the base color and the cubemap color blends between eachother as the values are lerped. The cubemap color also uses fresnel effects/calculations for stronger reflections.
+
 AllProps Shader - This shader uses properties from before and introduced more propeties such as range and vectors and shows how these different properties can affect an object and combines alot of what the other shaders have taught into one shader, with the new range being able to control how visible the shader is and vectors being used for things with multiple values. It combines difffuse, ambient, and reflections.
+
 Lambert Shader - This shader calculates the lambert diffuse and ambient and combines them and combines the color/texture with the diffuse to get a lambert shading effect where the more an object faces toward the light the brighter it appears
 
 
@@ -37,9 +42,7 @@ For me to fully understand things, I had to spend a couple hours after class and
 
 
 
-
-**
-Opportunities: **
+**Opportunities:**
 
 This assignment pushed me to learn more about the specifics of HLSL code and introduced a lot of new CG/Lighting/math concepts for me to study.
 
