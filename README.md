@@ -1,14 +1,14 @@
 # IntroCGActivity1
 
-**Screenshots of shaders:
-**
+**Screenshots of shaders:**
+
 
 <img width="1160" height="536" alt="image" src="https://github.com/user-attachments/assets/e832d303-b147-46f6-82f0-0870b411fb5b" />
 
 
 
-**What was done:
-**
+**What was done:**
+
 During class, I worked on a variety of shaders and learned about the code/math behind them such as:
 
 MultiUV Shader - This shader allows me to select two different UV coordinates for the texture on the model, and lets me switch between them in the inspector
