@@ -1,22 +1,7 @@
 # IntroCGActivity1
 
-**Screenshots of shaders:**
-
-
-<img width="897" height="649" alt="image" src="https://github.com/user-attachments/assets/4bf09742-a6df-4078-a1cf-2b60456c41cf" />
-
-
- 
-
-
-
-GITHUB REPO: https://github.com/BillsKDev/IntroCGActivity1
-
-
-
-
-Screenshots of shaders:
-
+**Screenshots of shaders:
+**
 
 <img width="1160" height="536" alt="image" src="https://github.com/user-attachments/assets/e832d303-b147-46f6-82f0-0870b411fb5b" />
 
