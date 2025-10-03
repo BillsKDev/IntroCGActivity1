@@ -113,12 +113,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EnvBlend: 1
-    - _EnvIntensity: 1
+    - _EnvBlend: 0.89
+    - _EnvIntensity: 2
     - _EnvironmentReflections: 1
     - _FresnalBoost: 1
     - _FresnelBoost: 1
-    - _FresnelPow: 5
+    - _FresnelPow: 4.7
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

@@ -1,72 +1,75 @@
-Shader "Custom/Lambert"
+Shader "Custom/LambertLit_URP"
 {
     Properties
     {
-        _MainTex ("Base Texture", 2D) = "white" {}
-        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
+        _Color ("Color", Color) = (1,1,1,1)
     }
-    
+
     SubShader
     {
-        Tags { "RenderPipeline" = "UniversalRenderPipeline" "RenderType" = "Opaque" }
-        
+        Tags { "RenderType"="Opaque"
+               "Queue"="Geometry"
+               "RenderPipeline"="UniversalRenderPipeline" }
+
         Pass
         {
+            Name "UniversalForward"
+            Tags { "LightMode"="UniversalForward" }
+
             HLSLPROGRAM
-            #pragma vertex vert
+            #pragma vertex   vert
             #pragma fragment frag
-            
+
+           
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;    
-                float3 normalOS : NORMAL; 
+                float3 normalOS   : NORMAL;
             };
-            
+
             struct Varyings
             {
-                float4 positionWS : SV_POSITION;
-                float2 uv : TEXCOORD0;
-                float3 normalWS : TEXCOORD1;
+                float4 positionHCS : SV_POSITION;
+                float3 normalWS    : TEXCOORD0;
             };
-            
-            TEXTURE2D(_MainTex);        
-            SAMPLER(sampler_MainTex);   
-            
+
             CBUFFER_START(UnityPerMaterial)
-                float4 _BaseColor;      
+                float4 _Color;
             CBUFFER_END
-            
-            Varyings vert(Attributes IN)
+
+            Varyings vert (Attributes IN)
             {
                 Varyings OUT;
-                OUT.positionWS = TransformObjectToHClip(IN.positionOS);        
-                OUT.uv = IN.uv;                                                  
-                OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS)); 
+                float3 posWS = TransformObjectToWorld(IN.positionOS.xyz);
+                OUT.positionHCS = TransformWorldToHClip(posWS);
+                OUT.normalWS    = TransformObjectToWorldNormal(IN.normalOS);
                 return OUT;
             }
-            
-            half4 frag(Varyings IN) : SV_Target
+
+            half4 frag (Varyings IN) : SV_Target
             {
-                // Sample texture color
-                half4 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
+               //normalize the normal vector
+                float3 N = SafeNormalize(IN.normalWS);
+
+                //get the main directional light then get the dot product of the normal vector
+                // and light direction then saturate it
+                Light mainLight = GetMainLight();           
+                float  NdotL    = saturate(dot(N, mainLight.direction));
+
                 
-                // Combine with base color
-                half3 finalColor = texColor.rgb * _BaseColor.rgb;
-                
-                // Apply simple lighting
-                half3 normal = normalize(IN.normalWS);
-                Light mainLight = GetMainLight();                    // Fetch main directional light
-                half3 lightDir = normalize(mainLight.direction);
-                half NdotL = saturate(dot(normal, lightDir));        // Lambertian lighting calculation
-                
-                return half4(finalColor * NdotL, 1.0);               // Final shaded color
+                half3  diffuse  = _Color.rgb * mainLight.color.rgb * NdotL;
+
+                // Ambient from spherical harmonics (scene ambient)
+                half3 ambient = SampleSH(N) * _Color.rgb;
+
+                return half4(diffuse + ambient, 1);
             }
-            
             ENDHLSL
         }
     }
+
+    FallBack Off
 }
