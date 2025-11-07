@@ -1,8 +1,8 @@
 Shader "Custom/MultiUV"
 {
-Properties
+    Properties
     {
-        _BaseMap   ("Base Map", 2D) = "white" {}
+        _BaseMap ("Base Map", 2D) = "white" {}
         _BaseColor ("Base Color", Color) = (1,1,1,1)
 
         [KeywordEnum(UV0, UV1)] _UVSET ("UV Set", Float) = 0
@@ -10,13 +10,19 @@ Properties
 
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry" "RenderPipeline"="UniversalRenderPipeline" }
+        Tags
+        {
+            "RenderType"="Opaque" "Queue"="Geometry" "RenderPipeline"="UniversalRenderPipeline"
+        }
         LOD 200
 
         Pass
         {
-            Name "Unlit" 
-            Tags { "LightMode"="UniversalForward" }
+            Name "Unlit"
+            Tags
+            {
+                "LightMode"="UniversalForward"
+            }
 
             HLSLPROGRAM
             #pragma vertex   vert
@@ -26,18 +32,17 @@ Properties
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            // ====== Vertex I/O ======
             struct Attributes
             {
                 float4 positionOS : POSITION;
-                float2 uv0        : TEXCOORD0;  
-                float2 uv1        : TEXCOORD1;  
+                float2 uv0 : TEXCOORD0;
+                float2 uv1 : TEXCOORD1;
             };
 
             struct Varyings
             {
                 float4 positionHCS : SV_POSITION;
-                float2 uv          : TEXCOORD0; 
+                float2 uv : TEXCOORD0;
             };
 
             TEXTURE2D(_BaseMap);
@@ -48,7 +53,7 @@ Properties
                 float4 _BaseMap_ST;
             CBUFFER_END
 
-            Varyings vert (Attributes IN)
+            Varyings vert(Attributes IN)
             {
                 Varyings OUT;
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
@@ -56,13 +61,13 @@ Properties
                 #if defined(_UVSET_UV1)
                     OUT.uv = TRANSFORM_TEX(IN.uv1, _BaseMap);
                 #else // _UVSET_UV0 (default)
-                    OUT.uv = TRANSFORM_TEX(IN.uv0, _BaseMap);
+                OUT.uv = TRANSFORM_TEX(IN.uv0, _BaseMap);
                 #endif
 
                 return OUT;
             }
 
-            half4 frag (Varyings IN) : SV_Target
+            half4 frag(Varyings IN) : SV_Target
             {
                 half4 baseTex = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
                 return half4(baseTex.rgb * _BaseColor.rgb, 1.0);
