@@ -1,4 +1,4 @@
-Shader "Custom/URP_OverlayUVScroll"
+Shader "Custom/WaterScrolling"
 {
     Properties
     {
