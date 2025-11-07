@@ -4,7 +4,8 @@
 
 **WHAT WAS DONE:**
 
-<h4>Material Vertex Fragment Shader:<h4> <p>This shader samples the texture and scales the UVs while applying a sine transformation distorted along the X and Y axes to create a wavy effect that is adjustable through a slider</p>
+<h4>Material Vertex Fragment Shader:<h4> 
+  <p>This shader samples the texture and scales the UVs while applying a sine transformation distorted along the X and Y axes to create a wavy effect that is adjustable through a slider</p>
 
 **Simple Lighting with Shadows:** This shader compute shadow coordinates using world position and gets the main light direction and computes some Lambertian lighting and samples shadow attenuation for the main light to darken areas not lit by the light
 
