@@ -14,6 +14,10 @@
 
 **Water:** This shader creates an animated water effect by using a sine wave to displace vertices based on a time and position then adjusting the vertex y position. For wave effect and the wave motion is controlled by frequency, amplitude, and speed parameters
 
+**Water Scrolling:** This shader makes a flat type of water effect by scrolling a water texture and a foam texture at different speeds over time using their UVs. Afterwards it blends them together where the foam texture scrolls half of the speed of the water for a layered effect
+
+
+
 
 
 
