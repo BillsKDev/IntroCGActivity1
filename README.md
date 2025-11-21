@@ -11,13 +11,15 @@ Scene Setup Explanation: To setup the scene i have the player on a rocky/grassy 
 
 What shaders were created: Water shader, Bump Shader, and, Flat shading
 
-Water shader explanation: A water shader was made to simulate a realistic scrolling water environment to fit the low poly look. The water shaders animates water a texture surface by scrolling two textures at different speeds based on time. For this shader it uses water and foam and these are blended together to create the unique water effect
+Water shader explanation: A water shader was made to simulate a realistic scrolling water environment to fit the low poly look. The water shaders animates water a texture surface by scrolling two textures at different speeds based on time. For this shader it uses water and foam and these are blended together to create the unique water effect. I think allowing the water to flow adds extra realism to the scene and just a static water texture would not really have any cool environment feel.
 
-Flat shading Explanation:  Flat shading was used to make the trees and the grass look more realistic in a low poly environment. Normal mapping has normals on each polygon face of an object so whenever light affects each face, it affects it differently for each face.
+Flat shading Explanation:  Flat shading was used to make the trees and the grass look more realistic in a low poly environment. Normal mapping has normals on each polygon face of an object so whenever light affects each face, it affects it differently for each face. To me, i feel like trees need to compliment the rough ground texture and with the flat shading it makes it stand out a lot more.
 
-Bump Mapping Explanation: Bump mapping was used on the rocky area to give it a very defined grainy and rough look and make the ground look more realistic. This was done by using a bump texture and applying normal mapping by transforming it to tangent to world to make the lighting calculated realistically with an intensity value that I can adjust
+Bump Mapping Explanation: Bump mapping was used on the rocky area to give it a very defined grainy and rough look and make the ground look more realistic I think it lets the ground stand out a lot more which enhances the scene. This was done by using a bump texture and applying normal mapping by transforming it to tangent to world to make the lighting calculated realistically with an intensity value that I can adjust. 
 
 Assets for character: https://assetstore.unity.com/packages/3d/characters/toony-tiny-people-demo-113188
+
+**NOTES IN CLASS**
 
 **Rendering Pipepline fundamentals**
 
