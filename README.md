@@ -3,6 +3,11 @@
 **Completed Survey Proof:**
 <img width="1892" height="248" alt="image" src="https://github.com/user-attachments/assets/f883502b-2397-4e38-b415-94b1e0b8fd78" />
 
+**PRACTICAL EXPLANATIONS**
+
+Scene created: <img width="1003" height="835" alt="image" src="https://github.com/user-attachments/assets/ffcd7515-1c16-4ada-a6bc-6ea737cf6a2e" />
+
+
 **Rendering Pipepline fundamentals**
 
 What the rendering pipeline is: A pipeline that proccesses how a 3d scene turns into a 2d screen by using different shader stages with vertex, uniform and element data to the gpu to render a scene with shaders, rasterizer and buffers
