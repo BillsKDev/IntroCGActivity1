@@ -7,6 +7,17 @@
 
 Scene created: <img width="1003" height="835" alt="image" src="https://github.com/user-attachments/assets/ffcd7515-1c16-4ada-a6bc-6ea737cf6a2e" />
 
+Scene Setup Explanation: To setup the scene i have the player on a rocky/grassy environment to show the land, i used a skybox from the asset store to give the night look, i just used primitives for the floor and trees since the shaders are able to give them the exact look without actually needing an extra model. I have trees setup in the back to follow the environment with a grassy area and a rocky area with a water area at the bottom with the enemy moving side to side.
+
+What shaders were created: Water shader, Bump Shader, and, Flat shading
+
+Water shader explanation: A water shader was made to simulate a realistic scrolling water environment to fit the low poly look. The water shaders animates water a texture surface by scrolling two textures at different speeds based on time. For this shader it uses water and foam and these are blended together to create the unique water effect
+
+Flat shading Explanation:  Flat shading was used to make the trees and the grass look more realistic in a low poly environment. Normal mapping has normals on each polygon face of an object so whenever light affects each face, it affects it differently for each face.
+
+Bump Mapping Explanation: Bump mapping was used on the rocky area to give it a very defined grainy and rough look and make the ground look more realistic. This was done by using a bump texture and applying normal mapping by transforming it to tangent to world to make the lighting calculated realistically with an intensity value that I can adjust
+
+Assets for character: https://assetstore.unity.com/packages/3d/characters/toony-tiny-people-demo-113188
 
 **Rendering Pipepline fundamentals**
 
