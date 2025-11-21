@@ -119,6 +119,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &34950260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100166, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
+  m_PrefabInstance: {fileID: 1018016065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &34950261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34950260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5326dcadc07666448e49ce76e087c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  pointA: {x: -3, y: 0, z: 0}
+  pointB: {x: 3, y: 0, z: 0}
+  speed: 2
+  useLocalPositions: 1
 --- !u!1 &90284348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,7 +1327,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100166, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 34950261}
   m_SourcePrefab: {fileID: 100100000, guid: f88c8301226fd194cbbc64e25b20d567, type: 3}
 --- !u!1 &1081982449
 GameObject:
